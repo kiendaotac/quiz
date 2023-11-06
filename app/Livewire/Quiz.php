@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\ExamStatusEnum;
 use App\Models\Exam;
 use Livewire\Component;
 
@@ -12,7 +13,7 @@ class Quiz extends Component
 
     public function mount(Exam $exam)
     {
-        if (!in_array($exam->status, ['ready', 'processing']) || $exam->user_id !== auth()->id()) {
+        if (!in_array($exam->status, [ExamStatusEnum::READY, ExamStatusEnum::PROCESSING]) || $exam->user_id !== auth()->id()) {
             abort(403, 'Bài thi không hợp lệ');
         }
         $this->exam->load(['questions' => function($query) {
@@ -22,7 +23,7 @@ class Quiz extends Component
         }]);
         $this->currentQuestion = $this->exam->questions->whereNull('answer_id')->first();
         if (!$this->currentQuestion) {
-            $exam->update(['status' => 'complete']);
+            $exam->update(['status' => ExamStatusEnum::COMPLETE]);
             $this->redirect(route('dashboard'));
         }
     }
