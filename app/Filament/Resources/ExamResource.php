@@ -67,13 +67,12 @@ class ExamResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('generate')
                     ->action(function ($record) {
-                        $questions = Question::where('status', 'active')->get();
-                        for ($i = 0; $i < $record->number_question; $i++) {
-                            $record->questions()->create([
-                                'question_id' => $questions->random()->id
-                            ]);
-                            $record->update(['status' => 'ready']);
-                        }
+                        $questions = Question::where('status', 'active')->get()->random($record->number_question);
+                        $questions = $questions->map(function ($item) use ($record) {
+                            return ['exam_id' => $record->id, 'question_id' => $item->id];
+                        });
+                        $record->questions()->createMany($questions);
+                        $record->update(['status' => ExamStatusEnum::READY]);
                     })
                     ->requiresConfirmation()
                     ->hidden(function ($record) {
