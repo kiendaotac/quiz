@@ -23,7 +23,7 @@
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>Số câu đã trả lời:{{ $exam->questions->whereNotNull('answer_id')->count() }} <small class="text-body-secondary fw-light">/{{ $exam->questions->count() }}</small></li>
                             </ul>
-                            @if(in_array($exam->status, ['ready', 'processing']))
+                            @if(in_array($exam->status, [\App\Enums\ExamStatusEnum::READY, \App\Enums\ExamStatusEnum::PROCESSING]))
                                 <a href="{{ route('quiz', $exam->id) }}" class="w-100 btn btn-lg btn-outline-primary">Làm bài thi</a>
                             @else
                                 <div class="w-100 btn btn-lg btn-outline-primary">{{ $exam->status->value() }}</div>
