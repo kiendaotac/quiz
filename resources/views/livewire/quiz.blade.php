@@ -1,5 +1,6 @@
-<div class="container">
+<div class="millionaire-wrap container">
     <div class="millionaire">
+        <div class="millionaire-overlay" style="background-image: url('https://quiz.kiendaotac.com/images/bg.jpg');"></div>
         <div class="millionaire-ui">
             <div class="millionaire-top ui">
                 <div class="millionaire-hints">

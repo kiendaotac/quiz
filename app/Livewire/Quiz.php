@@ -41,8 +41,13 @@ class Quiz extends Component
     private function updateCurrentQuestion(): void
     {
         $this->currentQuestion = $this->exam->questions->whereNull('answer_id')->first();
-        $this->currentQuestion->load(['question' => function($query) {
-            $query->with('answers');
-        }]);
+        if ($this->currentQuestion) {
+            $this->currentQuestion->load(['question' => function($query) {
+                $query->with('answers');
+            }]);
+        } else {
+            $this->exam->update(['status' => ExamStatusEnum::COMPLETE]);
+            $this->redirect(route('dashboard'));
+        }
     }
 }

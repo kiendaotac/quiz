@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap');
+body {
+    font-family: 'Baloo 2';
+    font-size: 14px;
+    font-weight: 600;
+}
 table, thead, tbody, tfoot, tr, th, td {
     margin: 0;
     padding: 0;
@@ -10,27 +16,22 @@ table, thead, tbody, tfoot, tr, th, td {
     -webkit-border-horizontal-spacing: 0;
     -webkit-border-vertical-spacing: 0;
 }
-
 *, *:before, *:after, input, textarea, button, select {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 input {
     border-radius: 0 !important;
     box-shadow: none !important;
 }
-
 ul, ol {
     list-style-type: none;
 }
-
 a, button {
     text-decoration: none;
     cursor: pointer;
 }
-
 input:focus,
 label:focus,
 textarea:focus,
@@ -40,28 +41,46 @@ button:focus,
 a:focus {
     outline: none;
 }
-
 html {
     font-size: 1vw;
     font-family: "Roboto", sans-serif;
 }
-
 .ui {
-    background-color: #394264;
+    background-color: rgba(255, 255, 255, 0.65);
     border-radius: 0.5rem;
     overflow: hidden;
 }
-
+.millionaire-wrap {
+    max-width: 100%;
+    padding: 0;
+    min-height: 100vh;
+}
 .millionaire {
     display: grid;
     grid-template-columns: 4fr 1fr;
     grid-gap: 2rem;
-    width: 100vw;
-    height: 100vh;
     padding: 2rem;
-    background-color: #1f253d;
-    color: #FFF;
-    text-shadow: 0.1rem 0.1rem 0.1rem #333;
+    color: #000;
+    min-height: 100vh;
+    position: relative;
+}
+.millionaire-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.millionaire-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.5);
 }
 .millionaire-top {
     display: flex;
@@ -75,7 +94,7 @@ html {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    background-color: #1f253d;
+    background-color: rgba(255, 255, 255, 0.75);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -130,6 +149,8 @@ html {
     height: 100%;
     grid-template-rows: 4rem 2.5fr 1fr;
     grid-gap: 2rem;
+    position: relative;
+    z-index: 2;
 }
 .millionaire-ui__question {
     display: flex;
@@ -138,7 +159,6 @@ html {
     text-align: center;
     padding: 2rem;
     font-size: 2rem;
-    font-weight: lighter;
 }
 .millionaire-ui-answers {
     display: grid;
@@ -146,7 +166,8 @@ html {
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 1rem;
     counter-reset: answers;
-    font-size: 1.5rem;
+    font-size: 24px;
+    line-height: 1.2;
     position: relative;
 }
 .millionaire-ui-answers__item {
@@ -154,25 +175,27 @@ html {
     align-items: center;
     transition: 0.3s;
     cursor: pointer;
+    min-height: 80px;
+}
+.millionaire-ui-answers__item p {
+    margin-bottom: 0;
 }
 .millionaire-ui-answers__item:before {
     content: counter(answers, lower-latin) ".";
     counter-increment: answers;
-    width: 4rem;
+    min-width: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
     align-self: stretch;
     margin-right: 1rem;
-    background-color: rgba(80, 89, 123, 0.4);
-    color: #9099b7;
+    background-color: rgba(255, 255, 255, 0.75);
+    color: #000;
+    font-weight: 700;
     transition: 0.3s;
 }
 .millionaire-ui-answers__item_picked, .millionaire-ui-answers__item:hover:not(.millionaire-ui-answers__item_lock) {
-    background-color: #fcb150;
-}
-.millionaire-ui-answers__item_picked:before, .millionaire-ui-answers__item:hover:not(.millionaire-ui-answers__item_lock):before {
-    color: #FFF;
+    background-color: rgba(252, 177, 80, 0.75);
 }
 .millionaire-ui-answers__item_accept {
     animation: getAccept 2s forwards;
@@ -195,10 +218,12 @@ html {
 .millionaire-progress {
     display: grid;
     grid-template-rows: auto 1fr;
+    position: relative;
+    z-index: 2;
 }
 .millionaire-progress-header {
     padding: 1rem;
-    background-color: #3468af;
+    background-color: rgba(255, 255, 255, 0.75);
     font-size: 1.5rem;
     text-align: center;
 }
@@ -217,20 +242,19 @@ html {
     transition: 0.3s;
 }
 .millionaire-progress-list__item_complete {
-    color: #9099b7;
+
 }
 .millionaire-progress-list__item_active {
-    background-color: #50597b;
+    background-color: rgba(252, 177, 80, 0.75);
 }
 .millionaire-progress-list__item_block {
-    background-color: #3468af;
+    background-color: rgba(255, 255, 255, 0.75);
     color: #FFF;
 }
 .millionaire-progress-list__item:before {
     content: counter(progress) ".";
     counter-increment: progress;
 }
-
 .modal-overlay {
     display: flex;
     justify-content: center;
@@ -328,7 +352,6 @@ html {
 .modal-hint-item__title {
     margin-bottom: 0.2em;
 }
-
 @keyframes getAccept {
     0% {
         background-color: #394264;
