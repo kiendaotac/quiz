@@ -10,18 +10,10 @@ class Quiz extends Component
     public $exam;
     public $currentQuestion;
 
-    public function mount()
+    public function mount(Exam $exam)
     {
-        $examProcessing = Exam::where('user_id', auth()->id())->whereStatus('processing')->first();
-        if (!$examProcessing) {
-            $examReady = Exam::where('user_id', auth()->id())->whereStatus('ready')->first();
-            if (!$examReady) {
-                abort(403, 'Bạn đang không có bài thi nào để thi');
-            }
-            $examReady->update(['status' => 'processing']);
-            $this->exam = $examReady;
-        } else {
-            $this->exam = $examProcessing;
+        if (!in_array($exam->status, ['ready', 'processing']) || $exam->user_id !== auth()->id()) {
+            abort(403, 'Bài thi không hợp lệ');
         }
         $this->exam->load(['questions' => function($query) {
             $query->with(['question' => function($query) {
@@ -29,9 +21,27 @@ class Quiz extends Component
             }]);
         }]);
         $this->currentQuestion = $this->exam->questions->whereNull('answer_id')->first();
+        if (!$this->currentQuestion) {
+            $exam->update(['status' => 'complete']);
+            $this->redirect(route('dashboard'));
+        }
     }
     public function render()
     {
         return view('livewire.quiz');
+    }
+
+    public function answer($answerId): void
+    {
+        $this->currentQuestion->update(['answer_id' => $answerId]);
+        $this->updateCurrentQuestion();
+    }
+
+    private function updateCurrentQuestion(): void
+    {
+        $this->currentQuestion = $this->exam->questions->whereNull('answer_id')->first();
+        $this->currentQuestion->load(['question' => function($query) {
+            $query->with('answers');
+        }]);
     }
 }

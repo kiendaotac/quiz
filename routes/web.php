@@ -16,4 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('quiz', \App\Livewire\Quiz::class)->name('quiz');
+Route::group(['middleware' => \Filament\Http\Middleware\Authenticate::class], function () {
+    Route::get('dashboard', \App\Livewire\Dasboard::class)->name('dashboard');
+    Route::get('quiz/{exam}', \App\Livewire\Quiz::class)->name('quiz');
+});

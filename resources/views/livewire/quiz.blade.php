@@ -22,7 +22,7 @@
             <!-- <div class="millionaire-ui-answers millionaire-ui-answers_picked"> -->
             <div class="millionaire-ui-answers">
                 @foreach($currentQuestion->question->answers ?? [] as $answer)
-                    <div class="millionaire-ui-answers__item ui">{!! $answer->content !!}</div>
+                    <div wire:click.prevent="answer({{ $answer->id }})" class="millionaire-ui-answers__item ui">{!! $answer->content !!}</div>
                 @endforeach
                 <!-- <div class="millionaire-ui-answers__item ui">One</div>
                 <div class="millionaire-ui-answers__item millionaire-ui-answers__item_picked ui">Two</div>
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay modal-overlay_fill-bg">
+    <div wire:ignore.self class="modal-overlay modal-overlay_fill-bg">
         <div class="modal-window modal-window-welcome ui">
             <div class="modal-window-welcome__col">
                 <div class="modal-window-welcome__item">

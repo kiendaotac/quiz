@@ -26,7 +26,6 @@ class ExamResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                    ->required()
                     ->label('Chọn user')
                     ->options(function () {
                         return User::all()->pluck('name', 'id');
