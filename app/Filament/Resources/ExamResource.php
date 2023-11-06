@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ExamStatusEnum;
 use App\Filament\Resources\ExamResource\Pages;
 use App\Filament\Resources\ExamResource\RelationManagers;
 use App\Models\Exam;
@@ -76,7 +77,7 @@ class ExamResource extends Resource
                     })
                     ->requiresConfirmation()
                     ->hidden(function ($record) {
-                        return $record->status !== 'pending';
+                        return $record->status !== ExamStatusEnum::PENDING;
                     })
             ])
             ->bulkActions([
