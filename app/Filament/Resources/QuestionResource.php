@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuestionResource\Pages;
 use App\Filament\Resources\QuestionResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Question;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -37,6 +38,10 @@ class QuestionResource extends Resource
                         3 => 'Khó'
                     ])
                     ->default(1),
+                Forms\Components\Select::make('category_id')
+                    ->required()
+                    ->options(Category::whereNotNull('parent_id')->pluck('name', 'id'))
+                    ->label('Danh mục'),
                 Forms\Components\Select::make('status')
                     ->required()
                     ->label('Trạng thái')
@@ -56,6 +61,7 @@ class QuestionResource extends Resource
                     ->label('Câu hỏi')
                     ->html()
                     ->limit(),
+                Tables\Columns\TextColumn::make('category.name'),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Trạng thái'),
                 Tables\Columns\TextColumn::make('answers')

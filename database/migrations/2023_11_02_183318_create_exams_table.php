@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('number_question');
             $table->foreignIdFor(\App\Models\User::class)->nullable();
+            $table->foreignIdFor(\App\Models\Category::class);
             $table->string('status')->default('pending');
             $table->timestamps();
         });

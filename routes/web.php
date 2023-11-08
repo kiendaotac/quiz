@@ -18,5 +18,11 @@ Route::get('/', function () {
 });
 Route::group(['middleware' => \Filament\Http\Middleware\Authenticate::class], function () {
     Route::get('dashboard', \App\Livewire\Dasboard::class)->name('dashboard');
+    Route::get('danh-muc/{category}', \App\Livewire\Category::class)->name('category');
     Route::get('quiz/{exam}', \App\Livewire\Quiz::class)->name('quiz');
 });
+
+Route::get('logout', function () {
+    auth()->logout();
+    return redirect(\route('dashboard'));
+})->name('user.logout')->middleware('guest');

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->integer('group')->default(1);
+            $table->foreignIdFor(\App\Models\Category::class);
             $table->text('content');
             $table->string('status')->default('active');
             $table->timestamps();

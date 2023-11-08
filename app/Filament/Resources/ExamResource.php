@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\ExamStatusEnum;
 use App\Filament\Resources\ExamResource\Pages;
 use App\Filament\Resources\ExamResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Exam;
 use App\Models\Question;
 use App\Models\User;
@@ -28,8 +29,15 @@ class ExamResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Chọn user')
+                    ->searchable()
                     ->options(function () {
                         return User::all()->pluck('name', 'id');
+                    }),
+                Forms\Components\Select::make('category_id')
+                    ->label('Chọn danh mục')
+                    ->searchable()
+                    ->options(function () {
+                        return Category::whereNotNull('parent_id')->pluck('name', 'id');
                     }),
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -55,6 +63,7 @@ class ExamResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('category.name'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('number_question'),
                 Tables\Columns\TextColumn::make('status'),
@@ -67,7 +76,7 @@ class ExamResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('generate')
                     ->action(function ($record) {
-                        $questions = Question::where('status', 'active')->get()->random($record->number_question);
+                        $questions = Question::where('status', 'active')->where('category_id', $record->category_id)->get()->random($record->number_question);
                         $questions = $questions->map(function ($item) use ($record) {
                             return ['exam_id' => $record->id, 'question_id' => $item->id];
                         });

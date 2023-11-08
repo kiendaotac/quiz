@@ -12,7 +12,7 @@ class Exam extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'number_question', 'user_id', 'status'];
+    protected $fillable = ['name', 'category_id', 'number_question', 'user_id', 'status'];
 
     protected $casts = [
         'status' => ExamStatusEnum::class
@@ -26,5 +26,10 @@ class Exam extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }

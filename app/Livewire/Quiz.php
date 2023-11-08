@@ -29,7 +29,7 @@ class Quiz extends Component
     }
     public function render()
     {
-        return view('livewire.quiz');
+        return view('livewire.quiz')->layout('components.layouts.empty');
     }
 
     public function answer($answerId): void
