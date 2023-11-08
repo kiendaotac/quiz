@@ -164,7 +164,7 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link" href="{{ route('category', $child->id) }}">
+                                            <a class="menu-link {{ request()->category == $child ? 'active': '' }}" href="{{ route('category', $child->id) }}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
