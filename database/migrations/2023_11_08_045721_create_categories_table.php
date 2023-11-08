@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('parent_id')->nullable();
             $table->string('name');
+            $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });
