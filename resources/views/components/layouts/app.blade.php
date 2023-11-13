@@ -13,7 +13,7 @@
     <meta property="og:url" content="{{ asset('/') }}" />
     <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
     <link rel="canonical" href="{{ asset('/') }}" />
-    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--end::Fonts-->
