@@ -15,7 +15,7 @@ class Exam extends Model
     protected $fillable = ['name', 'category_id', 'number_question', 'user_id', 'status'];
 
     protected $casts = [
-        'status' => ExamStatusEnum::class
+        'status' => ExamStatusEnum::class,
     ];
 
     public function questions(): HasMany

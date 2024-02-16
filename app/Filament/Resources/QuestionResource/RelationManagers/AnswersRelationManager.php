@@ -7,8 +7,6 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AnswersRelationManager extends RelationManager
 {
@@ -30,10 +28,10 @@ class AnswersRelationManager extends RelationManager
                     ->required()
                     ->label('Trạng thái')
                     ->options([
-                        'active' => 'Kích hoạt',
-                        'inactive' => 'Không kích hoạt'
+                        'active'   => 'Kích hoạt',
+                        'inactive' => 'Không kích hoạt',
                     ])
-                    ->default('active')
+                    ->default('active'),
             ]);
     }
 

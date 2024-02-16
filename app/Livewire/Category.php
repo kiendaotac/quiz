@@ -16,6 +16,7 @@ class Category extends Component
         $this->category = $category;
         $this->exams = Exam::where('category_id', $category->id)->get();
     }
+
     public function render()
     {
         return view('livewire.category');
