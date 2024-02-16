@@ -2,22 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
+use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
-use Filament\Tables;
+use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Hash;
+use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\UserResource\Pages;
+use Illuminate\Support\Facades\Hash;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
@@ -119,27 +119,28 @@ class UserResource extends Resource
             ->filters([
                 Tables\Filters\Filter::make('verified')
                     ->label(trans('filament-user::user.resource.verified'))
-                    ->query(fn(Builder $query): Builder => $query->whereNotNull('email_verified_at')),
+                    ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at')),
                 Tables\Filters\Filter::make('unverified')
                     ->label(trans('filament-user::user.resource.unverified'))
-                    ->query(fn(Builder $query): Builder => $query->whereNull('email_verified_at')),
+                    ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
             ])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
-                    DeleteAction::make()
+                    DeleteAction::make(),
                 ]),
             ]);
+
         return $table;
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
+            'index'  => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'edit'   => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

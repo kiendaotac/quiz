@@ -11,9 +11,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use function Laravel\Prompts\select;
 
 class QuestionResource extends Resource
 {
@@ -35,7 +32,7 @@ class QuestionResource extends Resource
                     ->options([
                         1 => 'Dễ',
                         2 => 'Vừa',
-                        3 => 'Khó'
+                        3 => 'Khó',
                     ])
                     ->default(1),
                 Forms\Components\Select::make('category_id')
@@ -46,8 +43,8 @@ class QuestionResource extends Resource
                     ->required()
                     ->label('Trạng thái')
                     ->options([
-                        'active' => 'Kích hoạt',
-                        'inactive' => 'Không kích hoạt'
+                        'active'   => 'Kích hoạt',
+                        'inactive' => 'Không kích hoạt',
                     ])
                     ->default('active'),
             ]);
@@ -71,9 +68,10 @@ class QuestionResource extends Resource
                             if ($item->correct) {
                                 return "<span class='text-danger-600'>{$item->content}</span>";
                             }
+
                             return $item->content;
                         })->join('');
-                    })
+                    }),
             ])
             ->filters([
                 //
@@ -88,20 +86,20 @@ class QuestionResource extends Resource
             ])
             ->defaultSort('created_at', 'desc');
     }
-    
+
     public static function getRelations(): array
     {
         return [
-            RelationManagers\AnswersRelationManager::class
+            RelationManagers\AnswersRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListQuestions::route('/'),
+            'index'  => Pages\ListQuestions::route('/'),
             'create' => Pages\CreateQuestion::route('/create'),
-            'edit' => Pages\EditQuestion::route('/{record}/edit'),
+            'edit'   => Pages\EditQuestion::route('/{record}/edit'),
         ];
-    }    
+    }
 }

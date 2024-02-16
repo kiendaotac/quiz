@@ -15,6 +15,7 @@ class Dasboard extends Component
             ->with('questions.answer')
             ->get();
     }
+
     public function render()
     {
         return view('livewire.dasboard');

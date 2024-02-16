@@ -24,5 +24,6 @@ Route::group(['middleware' => \Filament\Http\Middleware\Authenticate::class], fu
 
 Route::get('logout', function () {
     auth()->logout();
+
     return redirect(\route('dashboard'));
 })->name('user.logout')->middleware('guest');

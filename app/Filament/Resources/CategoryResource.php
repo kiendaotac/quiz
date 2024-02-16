@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CategoryResource extends Resource
 {
@@ -37,10 +34,10 @@ class CategoryResource extends Resource
                     ->label('Trạng thái')
                     ->required()
                     ->options([
-                        'active' => 'Kích hoạt',
-                        'inactive' => 'Không kích hoạt'
+                        'active'   => 'Kích hoạt',
+                        'inactive' => 'Không kích hoạt',
                     ])
-                    ->default('active')
+                    ->default('active'),
             ]);
     }
 
@@ -67,21 +64,21 @@ class CategoryResource extends Resource
             ])
             ->defaultSort('created_at', 'desc');
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
+            'index'  => Pages\ListCategories::route('/'),
             'create' => Pages\CreateCategory::route('/create'),
-            'view' => Pages\ViewCategory::route('/{record}'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'view'   => Pages\ViewCategory::route('/{record}'),
+            'edit'   => Pages\EditCategory::route('/{record}/edit'),
         ];
-    }    
+    }
 }

@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Enums\ExamStatusEnum;
 use App\Filament\Resources\ExamResource\Pages;
-use App\Filament\Resources\ExamResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Exam;
 use App\Models\Question;
@@ -14,8 +13,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ExamResource extends Resource
 {
@@ -52,9 +49,9 @@ class ExamResource extends Resource
                     ->required()
                     ->label('Trạng thái')
                     ->options([
-                        'pending' => 'Chờ tạo bài thi'
+                        'pending' => 'Chờ tạo bài thi',
                     ])
-                    ->default('pending')
+                    ->default('pending'),
             ]);
     }
 
@@ -86,7 +83,7 @@ class ExamResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(function ($record) {
                         return $record->status !== ExamStatusEnum::PENDING;
-                    })
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -95,21 +92,21 @@ class ExamResource extends Resource
             ])
             ->defaultSort('created_at', 'desc');
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListExams::route('/'),
+            'index'  => Pages\ListExams::route('/'),
             'create' => Pages\CreateExam::route('/create'),
-            'view' => Pages\ViewExam::route('/{record}'),
-            'edit' => Pages\EditExam::route('/{record}/edit'),
+            'view'   => Pages\ViewExam::route('/{record}'),
+            'edit'   => Pages\EditExam::route('/{record}/edit'),
         ];
-    }    
+    }
 }

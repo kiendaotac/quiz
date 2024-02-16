@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ExamStatusEnum:string
+enum ExamStatusEnum: string
 {
     case PENDING = 'pending';
     case READY = 'ready';
@@ -12,10 +12,10 @@ enum ExamStatusEnum:string
     public function value(): string
     {
         return match ($this) {
-            self::PENDING => 'Chờ tạo đề',
-            self::READY => 'Sẵn sàng thi',
+            self::PENDING    => 'Chờ tạo đề',
+            self::READY      => 'Sẵn sàng thi',
             self::PROCESSING => 'Đang làm bài',
-            self::COMPLETE => 'Hoàn thành',
+            self::COMPLETE   => 'Hoàn thành',
         };
     }
 }
